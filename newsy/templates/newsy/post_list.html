@@ -1,0 +1,47 @@
+{% extends 'newsy/base.html' %}
+
+{% block content %}
+	{% for post in posts %}
+		<div class="post">
+			<div class="date">
+				{{ post.data_opublikowania }}
+			</div>
+			<h1><a href="{% url 'post_detail' pk=post.pk %}">{{ post.tytul }}</a></h1>
+			<p>{{ post.tresc|linebreaks }}</p>
+			
+		</div>
+	{% endfor %}
+	{% for article in articles %}
+		<div class="post">
+			<div class="date">
+				{{ article.data_opublikowania }}
+			</div>
+			
+			<h1><a href="{% url 'article_detail' pk=article.pk %}">{{ article.tytul }}</a></h1>
+			
+			<p>{{ article.tresc|linebreaks }}</p>
+			
+		</div>
+	{% endfor %}
+	{% for lesson in lessons %}
+		<div class="post">
+			<div class="date">
+				{{ lesson.data_opublikowania }}
+			</div>
+			
+			<h1><a href="{% url 'lesson_detail' pk=lesson.pk %}">{{ lesson.tytul }}</a></h1>
+			
+			<p>{{ lesson.tresc|linebreaks }}</p>
+			
+		</div>
+	{% endfor %}
+	{% for category in categories %}
+		<div class="post">
+			<div class="date">
+				{{ category.data_opublikowania }}
+			</div>
+			
+			<h1><a href="{% url 'category_detail' pk=category.pk %}">{{ category.tytul }}</a></h1>			
+		</div>
+	{% endfor %}
+{% endblock content %}

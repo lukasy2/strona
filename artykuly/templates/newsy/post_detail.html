@@ -1,0 +1,16 @@
+{% extends 'newsy/base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+    <div class="post">
+        {% if post.data_opublikowania %}
+            <div class="date">
+                {{ post.data_opublikowania }}
+            </div>
+        {% endif %}
+		
+        <h1>{{ post.tytul }}</h1>
+        <p>{{ post.tresc|linebreaks }}</p>
+        <a href="/{{ post.docfile }}">{{ post.docfile }}</a>
+    </div>
+{% endblock %}

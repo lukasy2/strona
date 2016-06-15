@@ -1,0 +1,15 @@
+{% load staticfiles %}
+
+<html>
+
+{{ quizs }}
+
+    <p>Hej!</p>
+{% for question in questions %}
+	
+	<a href="/quiz/{{ question.qk }}" class="top-menu">{{ question.question }}</a><br>
+
+	
+{% endfor %}
+	
+</html>

@@ -1,0 +1,60 @@
+{% load staticfiles %}
+<html>
+    <head>
+        <title>Learning online</title>
+		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+		<link rel="stylesheet" href="{% static 'css/newsy.css' %}">
+		<link href="//fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+		<link href='https://fonts.googleapis.com/css?family=Amatic+SC:700' rel='stylesheet' type='text/css'>
+		<link href='https://fonts.googleapis.com/css?family=Indie+Flower' rel='stylesheet' type='text/css'>
+	</head>
+    <body>
+	
+        <div class="page-header">
+			{% if user.is_authenticated %}
+				{% if user.username == 'admin' %}
+					<a href="/admin" class="top-menu">Panel administracyjny<span class="glyphicon glyphicon-lock"></span></a>
+				{% endif %}
+			<p class="top-menu">Witaj {{ user.username }}<small>(<a href="{% url 'django.contrib.auth.views.logout' %}">Wyloguj się</a>)</small></p>
+			{% else %}
+			<a href="{% url 'django.contrib.auth.views.login' %}" class="top-menu">Logowanie<span class="glyphicon glyphicon-lock"></span></a>
+			<a href="{% url 'newsy.views.register_user' %}" class="top-menu">Rejestracja<span class="glyphicon glyphicon-user"></span></a>
+			{% endif %}
+			<a href="{% url 'newsy.views.post_list' %}"><img border="0" alt="LearningOnline" src="/static/logo.png" width="100" height="100">
+			<h1><a href="{% url 'newsy.views.post_list' %}">Learning online</a></h1>
+			<hr />
+			<a href="/" class="top-menu2">Newsy</a>
+			<a href="/articles" class="top-menu2">Artykuły</a>
+			<a href="/articles" class="top-menu2">blablabla</a>
+			<a href="/articles" class="top-menu2">Blabla</a><br>
+		</div>
+		        <div class="right-menu">
+				Nawigacja:<br>
+					
+					{% for article in articles %}
+					<a href="/article/{{ article.pk }}" class="top-menu">{{ article.tytul }}</a><br>
+					{% endfor %}
+
+					{% for post in posts %}
+
+					<a href="/post/{{ post.pk }}" class="top-menu">{{ post.tytul }}</a><br>
+ 					{% endfor %}
+					<a href="/article/{{ article.pk }}" class="top-menu">{{ article.tytul }}</a><br>
+					<a href="/post/{{ post.pk }}" class="top-menu">{{ post.tytul }}</a><br>
+				</div>
+				
+				
+    <div class="content container">
+        <div class="row">
+            <div class="col-md-8">
+            {% block content %}
+            {% endblock %}
+            </div>
+			
+        </div>
+		
+    </div>
+	
+    </body>
+</html>

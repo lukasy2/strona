@@ -1,0 +1,18 @@
+{% extends 'newsy/base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+    <div class="post">
+        {% if article.data_opublikowania %}
+            <div class="date">
+                {{ article.data_opublikowania }}
+            </div>
+        {% endif %}
+		
+        <h1>{{ article.tytul }}</h1>
+        <p>{{ article.tresc|linebreaks }}</p>
+		<img border="0" alt="LearningOnline" src="/{{ article.docfile }}">
+        <a href="/{{ article.docfile }}">{{ article.docfile }}</a>
+    </div>
+	
+{% endblock %}

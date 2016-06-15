@@ -1,0 +1,67 @@
+{% extends 'newsy/base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+    <div class="post">
+        {% if post.data_opublikowania %}
+            <div class="date">
+                {{ post.data_opublikowania }}
+            </div>
+        {% endif %}
+		
+        <h1>{{ post.tytul }}</h1>
+        <p>{{ post.tresc|linebreaks }}</p>
+		{% if post in czyobraz %}
+		<br><img style='max-height: 100%; width: 100%; object-fit: contain' border="0" alt="LearningOnline" src="/{{ post.docfile }}"><br><br>
+						{% endif %}
+
+        <a href="/{{ post.docfile }}">{{ post.docfile }}</a>
+    </div>
+	<div class="post">
+        {% if article.data_opublikowania %}
+            <div class="date">
+                {{ article.data_opublikowania }}
+            </div>
+        {% endif %}
+		
+        <h1>{{ article.tytul }}</h1>
+        <p>{{ article.tresc|linebreaks }}</p>
+		{% if article in czyobraz %}
+		<img style='max-height: 100%; width: 100%; object-fit: contain' border="0" alt="LearningOnline" src="/{{ article.docfile }}">
+				{% endif %}
+
+        <a href="/{{ article.docfile }}">{{ article.docfile }}</a>
+    </div>
+	<div class="post">
+        {% if lesson.data_opublikowania %}
+            <div class="date">
+                {{ lesson.data_opublikowania }}
+            </div>
+        {% endif %}
+		
+        <h1>{{ lesson.tytul }}</h1>
+        <p>{{ lesson.tresc|linebreaks }}</p>
+		{% if lesson in czyobraz %}
+ <img style='max-height: 100%; width: 100%; object-fit: contain' border="0" alt="LearningOnline" src="/{{ lesson.docfile }}">
+ 		{% endif %}
+
+        <a href="/{{ lesson.docfile }}">{{ lesson.docfile }}</a>
+    </div>
+	<div class="post">
+        {% if category.data_opublikowania %}
+            <div class="date">
+                {{ category.data_opublikowania }}
+            </div>
+        {% endif %}
+		
+        <h1>{{ category.tytul }}</h1>
+		{% if 'category' in request.path %}
+		<p><hr /></p>		
+		{% for article in articles %}
+			<h2><a href="/article/{{ article.pk }}" >{{ article.tytul }}</a></h2>
+		{% endfor %}
+		
+        {% endif %}
+    </div>
+	
+{% endblock %}

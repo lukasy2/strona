@@ -1,0 +1,46 @@
+{% load staticfiles %}
+<html>
+    <head>
+        <title>Learning online</title>
+		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+		<link rel="stylesheet" href="{% static 'css/newsy.css' %}">
+		<link href="//fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+		<link href='https://fonts.googleapis.com/css?family=Amatic+SC:700' rel='stylesheet' type='text/css'>
+		<link href='https://fonts.googleapis.com/css?family=Indie+Flower' rel='stylesheet' type='text/css'>
+	</head>
+    <body>
+	
+        <div class="page-header">
+			{% if user.is_authenticated %}
+				{% if user.username == 'admin' %}
+					<a href="/admin" class="top-menu">Panel administracyjny<span class="glyphicon glyphicon-lock"></span></a>
+				{% endif %}
+			<p class="top-menu">Witaj {{ user.username }}<small>(<a href="{% url 'django.contrib.auth.views.logout' %}">Wyloguj sie</a>)</small></p>
+			{% else %}
+			<a href="{% url 'django.contrib.auth.views.login' %}" class="top-menu">Logowanie<span class="glyphicon glyphicon-lock"></span></a>
+			<a href="{% url 'newsy.views.register_user' %}" class="top-menu">Rejestracja<span class="glyphicon glyphicon-user"></span></a>
+			{% endif %}
+			<a href="{% url 'newsy.views.post_list' %}"><img border="0" alt="LearningOnline" src="/static/logo.png" width="100" height="100">
+			<h1><a href="{% url 'newsy.views.post_list' %}">Learning online</a></h1>
+		</div>
+		        <div class="right-menu">
+					{% for post in posts %}
+					<a href="{% url 'post_detail' pk=post.pk %}" class="top-menu">{{ post.tytul }}</a><br>
+					{% endfor %}					
+				</div>
+				
+				
+    <div class="content container">
+        <div class="row">
+            <div class="col-md-8">
+            {% block content %}
+            {% endblock %}
+            </div>
+			
+        </div>
+		
+    </div>
+	
+    </body>
+</html>

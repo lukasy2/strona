@@ -1,0 +1,112 @@
+{% load staticfiles %}
+<html>
+    <head>
+        <title>Learning online</title>
+		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+		<link rel="stylesheet" href="{% static 'css/newsy.css' %}">
+		<link href="//fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+		<link href='https://fonts.googleapis.com/css?family=Amatic+SC:700' rel='stylesheet' type='text/css'>
+		<link href='https://fonts.googleapis.com/css?family=Indie+Flower' rel='stylesheet' type='text/css'>
+	</head>
+    <body>
+	
+        <div class="page-header">
+			{% if user.is_authenticated %}
+				{% if user.username == 'admin' %}
+					<a href="/admin" class="top-menu">Panel administracyjny<span class="glyphicon glyphicon-lock"></span></a>
+				{% endif %}
+			<p class="top-menu">Witaj {{ user.username }}<small>(<a href="{% url 'django.contrib.auth.views.logout' %}">Wyloguj się</a>)</small></p>
+			{% else %}
+			<a href="{% url 'django.contrib.auth.views.login' %}" class="top-menu">Logowanie<span class="glyphicon glyphicon-lock"></span></a>
+			<a href="{% url 'newsy.views.register_user' %}" class="top-menu">Rejestracja<span class="glyphicon glyphicon-user"></span></a>
+			{% endif %}
+			<a href="{% url 'newsy.views.post_list' %}"><img border="0" alt="LearningOnline" src="/static/logo.png" width="100" height="100">
+			<h1><a href="{% url 'newsy.views.post_list' %}">Learning online</a></h1>
+			<hr />
+			
+			
+			
+			
+			<ol>
+    <li><a href="/">Aktualności</a></li>
+
+    <li><a href="/articles">Kursy</a>
+      <ul>
+	  {% for article in artykuly %}
+			<li><a href="/article/{{ article.pk }}">{{ article.tytul }}</a></li>
+		{% endfor %}
+        {% for article in articles %}
+			<li><a href="/article/{{ article.pk }}">{{ article.tytul }}</a></li>
+		{% endfor %}
+      </ul>
+    </li>
+
+    <li><a href="/categories">Kategorie</a>
+      <ul>
+		{% for category in kategorie %}
+			<li><a href="/category/{{ category.pk }}">{{ category.tytul }}</a></li>
+		{% endfor %}
+		{% for category in categories %}
+			<li><a href="/category/{{ category.pk }}">{{ category.tytul }}</a></li>
+		{% endfor %}
+      </ul>
+    </li>
+  </ol>
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+		</div>
+		        <div class="right-menu">
+				Nawigacja:<br><br>
+				{% if '/article/' in request.path %}
+				
+					{% for lesson in lekcje %}
+					<a href="/lesson/{{ lesson.pk }}"><font color="white" size=4>{{ lesson.tytul }}</font></a><br><hr />
+					{% endfor %}
+					{% for lesson in lessons %}
+					<a href="/lesson/{{ lesson.pk }}"><font color="white" size=4>{{ lesson.tytul }}</font></a><br><hr />
+					{% endfor %}
+					{% elif 'categories' in request.path %}
+					{% for category in categories %}
+					<a href="/category/{{ category.pk }}"><font color="white" size=4>{{ category.tytul }}</font></a><br><hr />
+					{% endfor %}
+					
+				{% else %}
+					{% for article in articles %}
+					<a href="/article/{{ article.pk }}"><font color="white" size=4>{{ article.tytul }}</font></a><br><hr />
+					{% endfor %}
+					
+					{% for post in posts %}
+					<a href="/post/{{ post.pk }}"><font color="white" size=4>{{ post.tytul }}</font></a><br><hr />
+ 					{% endfor %}
+				{% endif %}
+				
+
+				</div>
+				
+				
+    <div class="content container">
+        <div class="row">
+            <div class="col-md-8">
+			<body background="/static/tlo.png" no-repeat;>
+            {% block content %}
+            {% endblock %}
+            </div>
+			
+        </div>
+		
+    </div>
+	
+    </body>
+</html>

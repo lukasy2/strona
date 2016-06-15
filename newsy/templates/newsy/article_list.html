@@ -1,0 +1,16 @@
+{% extends 'newsy/base.html' %}
+
+{% block content %}
+	{% for article in articles %}
+		<div class="post">
+			<div class="date">
+				{{ article.data_opublikowania }}
+			</div>
+			
+			<h1><a href="{% url 'article_detail' pk=article.pk %}">{{ article.tytul }}</a></h1>
+			
+			<p>{{ article.tresc|linebreaks }}</p>
+			
+		</div>
+	{% endfor %}
+{% endblock content %}

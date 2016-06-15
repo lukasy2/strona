@@ -1,0 +1,17 @@
+{% extends 'newsy/base.html' %}
+
+{% block content %}
+	{% for post in posts %}
+		<div class="post">
+			<div class="date">
+				{{ post.data_opublikowania }}
+			</div>
+			
+			<h1><a href="{% url 'post_detail' pk=post.pk %}">{{ post.tytul }}</a></h1>
+			
+			<a href="{% url 'django.contrib.auth.views.login' %}" class="top-menu"><span class="glyphicon glyphicon-lock"></span></a>
+			<p>{{ post.tresc|linebreaks }}</p>
+			
+		</div>
+	{% endfor %}
+{% endblock content %}

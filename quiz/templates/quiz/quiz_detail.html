@@ -1,0 +1,16 @@
+{% load staticfiles %}
+<html>
+    <p>Hej!</p>
+	<form method="POST">
+{% for question in questions %}
+	{{ question }}<br>
+		{% for option in options %}
+{{ option }}
+	<input type="radio" value="{{ option  }}" name="{{ option }}"><br>
+		{% endfor %}
+		
+{% endfor %}
+	
+	<button type="submit">Sprawdź odpowiedzi</button>
+    </form>
+</html>
