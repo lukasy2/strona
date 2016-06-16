@@ -2,6 +2,9 @@ from django.db import models
 from django.utils import timezone
 
 class Post(models.Model):
+    class Meta:
+        verbose_name = "News"
+        verbose_name_plural = "Newsy"
     autor = models.ForeignKey('auth.User')
     tytul = models.CharField(max_length=200)
     tresc = models.TextField()
@@ -18,13 +21,3 @@ class Post(models.Model):
     def __str__(self):
         return self.tytul
 
-		
-# class Kategoria(models.Model):
-    # nazwa = models.CharField(max_length=200)
-
-    # def publikuj(self):
-        # self.data_opublikowania = timezone.now()
-        # self.save()
-
-    # def __str__(self):
-        # return self.nazwa

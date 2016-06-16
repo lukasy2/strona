@@ -2,6 +2,9 @@ from django.db import models
 from django.utils import timezone
 
 class Category(models.Model):
+    class Meta:
+        verbose_name = "Kategoria"
+        verbose_name_plural = "Kategorie"
     tytul = models.CharField(max_length=200)
     data_utworzenia = models.DateTimeField(
             default=timezone.now)
@@ -16,6 +19,9 @@ class Category(models.Model):
         return self.tytul
 
 class Article(models.Model):
+    class Meta:
+        verbose_name = "Kurs"
+        verbose_name_plural = "Kursy"
     kategoria = models.ForeignKey('Category')
     tytul = models.CharField(max_length=200)
     tresc = models.TextField()
@@ -33,6 +39,9 @@ class Article(models.Model):
         return self.tytul
 		
 class Lekcja(models.Model):
+    class Meta:
+        verbose_name = "Lekcja"
+        verbose_name_plural = "Lekcje"
     kurs = models.ForeignKey('Article')
     tytul = models.CharField(max_length=200)
     tresc = models.TextField()
