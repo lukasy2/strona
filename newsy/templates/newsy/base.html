@@ -13,8 +13,8 @@
 	
         <div class="page-header">
 			{% if user.is_authenticated %}
-				{% if user.username == 'admin' %}
-					<a href="/admin" class="top-menu">Panel administracyjny<span class="glyphicon glyphicon-lock"></span></a>
+				{% if user.is_staff %}
+					<a href="/admin" class="top-menu">Panel administracyjny<span class="glyphicon glyphicon-lock"></span></a>			
 				{% endif %}
 			<p class="top-menu">Witaj {{ user.username }}<small>(<a href="{% url 'django.contrib.auth.views.logout' %}">Wyloguj się</a>)</small></p>
 			{% else %}
@@ -31,17 +31,6 @@
 			<ol>
     <li><a href="/">Aktualności</a></li>
 
-    <li><a href="/articles">Kursy</a>
-      <ul>
-	  {% for article in artykuly %}
-			<li><a href="/article/{{ article.pk }}">{{ article.tytul }}</a></li>
-		{% endfor %}
-        {% for article in articles %}
-			<li><a href="/article/{{ article.pk }}">{{ article.tytul }}</a></li>
-		{% endfor %}
-      </ul>
-    </li>
-
     <li><a href="/categories">Kategorie</a>
       <ul>
 		{% for category in kategorie %}
@@ -52,6 +41,18 @@
 		{% endfor %}
       </ul>
     </li>
+	
+	<li><a href="/articles">Kursy</a>
+      <ul>
+	  {% for article in artykuly %}
+			<li><a href="/article/{{ article.pk }}">{{ article.tytul }}</a></li>
+		{% endfor %}
+        {% for article in articles %}
+			<li><a href="/article/{{ article.pk }}">{{ article.tytul }}</a></li>
+		{% endfor %}
+      </ul>
+    </li>
+	<li><a href="/q">Testy</a></li>
   </ol>
 			
 			
