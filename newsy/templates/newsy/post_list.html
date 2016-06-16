@@ -1,6 +1,8 @@
 {% extends 'newsy/base.html' %}
 
 {% block content %}
+			{% autoescape off %}
+
 	{% for post in posts %}
 		<div class="post">
 			<div class="date">
@@ -9,6 +11,7 @@
 			<h1><a href="{% url 'post_detail' pk=post.pk %}">{{ post.tytul }}</a></h1>
 			<p>{{ post.tresc|linebreaks }}</p>
 			
+
 		</div>
 	{% endfor %}
 	{% for article in articles %}
@@ -44,4 +47,5 @@
 			<h1><a href="{% url 'category_detail' pk=category.pk %}">{{ category.tytul }}</a></h1>			
 		</div>
 	{% endfor %}
+	{% endautoescape %}
 {% endblock content %}

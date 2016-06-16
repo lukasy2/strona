@@ -81,7 +81,10 @@
 					{% for category in categories %}
 					<a href="/category/{{ category.pk }}"><font color="white" size=4>{{ category.tytul }}</font></a><br><hr />
 					{% endfor %}
-					
+					{% elif '/lesson/' in request.path %}
+					{% for lesson in lessons %}
+					<a href="/lesson/{{ lesson.pk }}"><font color="white" size=4>{{ lesson.tytul }}</font></a><br><hr />
+					{% endfor %}
 				{% else %}
 					{% for article in articles %}
 					<a href="/article/{{ article.pk }}"><font color="white" size=4>{{ article.tytul }}</font></a><br><hr />

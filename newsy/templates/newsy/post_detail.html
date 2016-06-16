@@ -2,6 +2,8 @@
 {% load staticfiles %}
 
 {% block content %}
+			{% autoescape off %}
+
     <div class="post">
         {% if post.data_opublikowania %}
             <div class="date">
@@ -63,5 +65,5 @@
 		
         {% endif %}
     </div>
-	
+	{% endautoescape %}
 {% endblock %}
