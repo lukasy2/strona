@@ -8,10 +8,10 @@ from quiz.models import Question
 class TF_Question(Question):
     correct = models.BooleanField(blank=False,
                                   default=False,
-                                  help_text=_("Tick this if the question "
-                                              "is true. Leave it blank for"
-                                              " false."),
-                                  verbose_name=_("Correct"))
+                                  help_text=_("Zaznacz jeśli odpowiedź jest "
+                                              "prawdziwa. Zostaw pole puste jeśli jest"
+                                              " fałszywa."),
+                                  verbose_name=_("Prawda"))
 
     def check_if_correct(self, guess):
         if guess == "True":
@@ -39,6 +39,6 @@ class TF_Question(Question):
         return str(guess)
 
     class Meta:
-        verbose_name = _("True/False Question")
-        verbose_name_plural = _("True/False Questions")
+        verbose_name = _("Pytanie prawda/fałsz")
+        verbose_name_plural = _("Pytania prawda/fałsz")
         ordering = ['category']

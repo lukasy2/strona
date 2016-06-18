@@ -31,13 +31,14 @@ def register_user(request):
         if form.is_valid():
             form.save()
             return HttpResponseRedirect('/accounts/register_success')
+    else:
+        form = UserCreationForm()
 
     args = {}
     args.update(csrf(request))
-	
-    args['form'] = UserCreationForm()
-    return render_to_response('registration/register.html', args)
-
+    args['form'] = form
+    return render_to_response('registration/register.html',args)
+    
 	
 def register_success(request):
     return render_to_response('registration/register_success.html')
@@ -52,10 +53,11 @@ def article_list(request):
 # @login_required
 def article_detail(request, pk):
     article = get_object_or_404(Article, pk=pk)
+    categories = Category.objects.filter(data_opublikowania__lte=timezone.now()).order_by('data_opublikowania')
     lessons = Lekcja.objects.filter(Q(data_opublikowania__lte=timezone.now()), Q(kurs__tytul__contains=article.tytul))
     czyobraz = Article.objects.filter(Q(docfile__endswith='png') | Q(docfile__endswith='jpg') | Q(docfile__endswith='bmp') | Q(docfile__endswith='gif') | Q(docfile__endswith='jpeg'))
     articles = Article.objects.filter(data_opublikowania__lte=timezone.now()).order_by('data_opublikowania')
-    return render(request, 'newsy/post_detail.html', {'article': article, 'articles': articles, 'czyobraz': czyobraz, 'lessons': lessons})
+    return render(request, 'newsy/post_detail.html', {'article': article, 'articles': articles, 'czyobraz': czyobraz, 'lessons': lessons, 'categories': categories})
 	
 def lesson_list(request):
     lessons = Lekcja.objects.filter(data_opublikowania__lte=timezone.now()).order_by('data_opublikowania')
@@ -64,9 +66,11 @@ def lesson_list(request):
 # @login_required
 def lesson_detail(request, pk):
     lesson = get_object_or_404(Lekcja, pk=pk)
+    articles = Article.objects.filter(data_opublikowania__lte=timezone.now()).order_by('data_opublikowania')
+    categories = Category.objects.filter(data_opublikowania__lte=timezone.now()).order_by('data_opublikowania')
     czyobraz = Lekcja.objects.filter(Q(docfile__endswith='png') | Q(docfile__endswith='jpg') | Q(docfile__endswith='bmp') | Q(docfile__endswith='gif') | Q(docfile__endswith='jpeg'))
     lessons = Lekcja.objects.filter(data_opublikowania__lte=timezone.now()).order_by('data_opublikowania')
-    return render(request, 'newsy/post_detail.html', {'lesson': lesson, 'lessons': lessons, 'czyobraz': czyobraz})
+    return render(request, 'newsy/post_detail.html', {'lesson': lesson, 'lessons': lessons, 'czyobraz': czyobraz, 'articles': articles, 'categories': categories})
 	
 def category_list(request):
     categories = Category.objects.filter(data_opublikowania__lte=timezone.now()).order_by('data_opublikowania')

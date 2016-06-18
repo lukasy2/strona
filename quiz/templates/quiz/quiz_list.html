@@ -1,18 +1,18 @@
 {% extends 'base.html' %}
 {% load i18n %}
-{% block title %}{% trans "All Quizzes" %}{% endblock %}
+{% block title %}{% trans "Dostępne testy" %}{% endblock %}
 
 {% block content %}
-<h2>{% trans "List of quizzes" %}</h2>
+<h2>{% trans "Dostępne testy:" %}</h2>
     {% if quiz_list %}
 		<table class="table table-bordered table-striped">
 
 		  <thead>
 			<tr>
-			  <th>{% trans "Title" %}</th>
-			  <th>{% trans "Category" %}</th>
-			  <th>{% trans "Exam" %}</th>
-			  <th>{% trans "Single attempt" %}</th>
+			  <th>{% trans "Tytuł" %}</th>
+			  <th>{% trans "Kategoria" %}</th>
+			  <th>{% trans "Egzamin" %}</th>
+			  <th>{% trans "Jedno podejście" %}</th>
 			  <th></th>
 			</tr>
 		  </thead>
@@ -24,11 +24,19 @@
   			<tr>
 			  <td>{{ quiz.title }}</td>
 			  <td>{{ quiz.category }}</td>
-			  <td>{{ quiz.exam_paper }}</td>
-			  <td>{{ quiz.single_attempt }}</td>
+			  {% if quiz.exam_paper %}
+			  <td>Tak</td>
+			  {% else %}
+			  <td>Nie</td>
+			  {% endif %}
+			  {% if quiz.single_attempt %}
+			  <td>Tak</td>
+			  {% else %}
+			  <td>Nie</td>
+			  {% endif %}
 			  <td>
 				<a href="{% url 'quiz_start_page' slug=quiz.url %}">
-				  {% trans "View details" %}
+				  {% trans "Szczegóły" %}
 				</a>
 			</tr>
 
@@ -38,9 +46,8 @@
 		</table>
 
 	{% else %}
-        <p>{% trans "There are no available quizzes" %}.</p>
+        <p>{% trans "Nie ma dostępnych testów" %}.</p>
     {% endif %}
 	
-	<a href="/">Powrót na stronę główną</a>
 	
 {% endblock %}

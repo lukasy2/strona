@@ -17,10 +17,10 @@ class MCQuestion(Question):
     answer_order = models.CharField(
         max_length=30, null=True, blank=True,
         choices=ANSWER_ORDER_OPTIONS,
-        help_text=_("The order in which multichoice "
-                    "answer options are displayed "
-                    "to the user"),
-        verbose_name=_("Answer Order"))
+        help_text=_("Kolejność w jakiej możliwe opcje "
+                    "odpowiedzi są wyświetlane "
+                    "użytkownikowi."),
+        verbose_name=_("Kolejność odpowiedzi"))
 
     def check_if_correct(self, guess):
         answer = Answer.objects.get(id=guess)
@@ -50,28 +50,28 @@ class MCQuestion(Question):
         return Answer.objects.get(id=guess).content
 
     class Meta:
-        verbose_name = _("Multiple Choice Question")
-        verbose_name_plural = _("Multiple Choice Questions")
+        verbose_name = _("Pytanie testowe")
+        verbose_name_plural = _("Pytania testowe")
 
 
 @python_2_unicode_compatible
 class Answer(models.Model):
-    question = models.ForeignKey(MCQuestion, verbose_name=_("Question"))
+    question = models.ForeignKey(MCQuestion, verbose_name=_("Pytanie"))
 
     content = models.CharField(max_length=1000,
                                blank=False,
-                               help_text=_("Enter the answer text that "
-                                           "you want displayed"),
-                               verbose_name=_("Content"))
+                               help_text=_("Wpisz tekst odpowiedzi, "
+                                           "który ma zostać wyświetlony"),
+                               verbose_name=_("Odpowiedzi"))
 
     correct = models.BooleanField(blank=False,
                                   default=False,
-                                  help_text=_("Is this a correct answer?"),
-                                  verbose_name=_("Correct"))
+                                  help_text=_("Czy to jest poprawna odpowiedź?"),
+                                  verbose_name=_("Prawda"))
 
     def __str__(self):
         return self.content
 
     class Meta:
-        verbose_name = _("Answer")
-        verbose_name_plural = _("Answers")
+        verbose_name = _("Odpowiedź")
+        verbose_name_plural = _("Odpowiedzi")

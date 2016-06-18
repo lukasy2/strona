@@ -1,15 +1,12 @@
-{% extends "newsy/base.html" %}
+{% extends "newsy/base2.html" %}
 
 {% block content %}
 
 	<h2>Register</h2>
 	
-	{% if form.errors %}
-	<p>Nieprawidłowe dane lub taki użytkownik już istnieje. Spróbuj ponownie.</p>
-	{% endif %}
 	
 	<form action="/accounts/register/" method="post">{% csrf_token %}
-	{{form}}	
+	{{form}}<br>	
 	<input type="submit" value="Register" />
 	
 	</form>

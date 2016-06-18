@@ -6,20 +6,20 @@
 {% endblock %}
 
 {% block content %}
-<h2>{% trans "Quiz title" %}: {{ sitting.quiz.title }}</h2>
-<h3>{% trans "Category" %}: {{ sitting.quiz.category }}</h3>
+<h2>{% trans "Tytuł testu" %}: {{ sitting.quiz.title }}</h2>
+<h3>{% trans "Kategoria" %}: {{ sitting.quiz.category }}</h3>
 <p>{{ sitting.quiz.description }}</p>
 <hr>
-<p>{% trans "User" %}: {{ sitting.user }}</p>
-<p>{% trans "Completed" %}: {{ sitting.end|date }}</p>
-<p>{% trans "Score" %}: {{ sitting.get_percent_correct }}%</p>
+<p>{% trans "Użytkownik" %}: {{ sitting.user }}</p>
+<p>{% trans "Ukończono" %}: {{ sitting.end|date }}</p>
+<p>{% trans "Wynik" %}: {{ sitting.get_percent_correct }}%</p>
 
 <table class="table table-bordered table-striped">
 
   <thead>
 	<tr>
-	  <th>{% trans "Question" %}</th>
-	  <th>{% trans "User answer" %}</th>
+	  <th>{% trans "Pytanie" %}</th>
+	  <th>{% trans "Odpowiedź użytkownika" %}</th>
 	  <th></th>
 	  <th></th>
 	</tr>
@@ -38,15 +38,15 @@
 	  <td>{{ question|answer_choice_to_string:question.user_answer }}</td>
 	  <td>
 		{% if question.id in sitting.get_incorrect_questions %}
-		  <p>{% trans "incorrect" %}</p>
+		  <p>{% trans "Błędna odpowiedź" %}</p>
 		{% else %}
-		  <p>{% trans "Correct" %}</p>
+		  <p>{% trans "Prawidłowa odpowiedź" %}</p>
 		{% endif %}
 	  </td>
 	  <td>
 		<form action="" method="POST">{% csrf_token %}
 		  <input type=hidden name="qid" value="{{ question.id }}">
-		  <button type="submit" class="btn btn-warning">{% trans "Toggle whether correct" %}</button>
+		  <button type="submit" class="btn btn-warning">{% trans "Popraw odpowiedź" %}</button>
 		</form>
 	  </td>
 	</tr>

@@ -51,8 +51,9 @@
 			<li><a href="/article/{{ article.pk }}">{{ article.tytul }}</a></li>
 		{% endfor %}
       </ul>
-    </li>
+    </li>{% if user.is_authenticated %}
 	<li><a href="/q">Testy</a></li>
+	{% endif %}
   </ol>
 			
 			
@@ -102,7 +103,7 @@
 				
     <div class="content container">
         <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-10">
 			<body background="/static/tlo.png" no-repeat;>
             {% block content %}
             {% endblock %}

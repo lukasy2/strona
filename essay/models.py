@@ -23,5 +23,5 @@ class Essay_Question(Question):
         return self.content
 
     class Meta:
-        verbose_name = _("Essay style question")
-        verbose_name_plural = _("Essay style questions")
+        verbose_name = _("Pytanie otwarte")
+        verbose_name_plural = _("Pytania otwarte")

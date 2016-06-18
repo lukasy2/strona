@@ -27,15 +27,15 @@ class CategoryManager(models.Manager):
 class Category(models.Model):
 
     category = models.CharField(
-        verbose_name=_("Category"),
+        verbose_name=_("Kategoria"),
         max_length=250, blank=True,
         unique=True, null=True)
 
     objects = CategoryManager()
 
     class Meta:
-        verbose_name = _("Category")
-        verbose_name_plural = _("Categories")
+        verbose_name = _("Kategoria")
+        verbose_name_plural = _("Kategorie")
 
     def __str__(self):
         return self.category
@@ -45,18 +45,18 @@ class Category(models.Model):
 class SubCategory(models.Model):
 
     sub_category = models.CharField(
-        verbose_name=_("Sub-Category"),
+        verbose_name=_("Podkategoria"),
         max_length=250, blank=True, null=True)
 
     category = models.ForeignKey(
         Category, null=True, blank=True,
-        verbose_name=_("Category"))
+        verbose_name=_("Kategoria"))
 
     objects = CategoryManager()
 
     class Meta:
-        verbose_name = _("Sub-Category")
-        verbose_name_plural = _("Sub-Categories")
+        verbose_name = _("Podkategoria")
+        verbose_name_plural = _("Podkategorie")
 
     def __str__(self):
         return self.sub_category + " (" + self.category.category + ")"
@@ -66,74 +66,74 @@ class SubCategory(models.Model):
 class Quiz(models.Model):
 
     title = models.CharField(
-        verbose_name=_("Title"),
+        verbose_name=_("Tytuł"),
         max_length=60, blank=False)
 
     description = models.TextField(
-        verbose_name=_("Description"),
-        blank=True, help_text=_("a description of the quiz"))
+        verbose_name=_("Opis"),
+        blank=True, help_text=_("opis testu"))
 
     url = models.SlugField(
         max_length=60, blank=False,
-        help_text=_("a user friendly url"),
-        verbose_name=_("user friendly url"))
+        help_text=_("Przyjazny użytkownikowi adres URL"),
+        verbose_name=_("Łatwy adres URL"))
 
     category = models.ForeignKey(
         Category, null=True, blank=True,
-        verbose_name=_("Category"))
+        verbose_name=_("Kategoria"))
 
     random_order = models.BooleanField(
         blank=False, default=False,
-        verbose_name=_("Random Order"),
-        help_text=_("Display the questions in "
-                    "a random order or as they "
-                    "are set?"))
+        verbose_name=_("Losowa kolejność"),
+        help_text=_("Wyświetla pytania "
+                    "w losowej kolejności czy "
+                    "tak jak są ustawione?"))
 
     max_questions = models.PositiveIntegerField(
-        blank=True, null=True, verbose_name=_("Max Questions"),
-        help_text=_("Number of questions to be answered on each attempt."))
+        blank=True, null=True, verbose_name=_("Ilość pytań"),
+        help_text=_("Liczba pytań w każdym podejściu"))
 
     answers_at_end = models.BooleanField(
         blank=False, default=False,
-        help_text=_("Correct answer is NOT shown after question."
-                    " Answers displayed at the end."),
-        verbose_name=_("Answers at end"))
+        help_text=_("Prawidłowa odpowiedź NIE jest wyświetlona po każdym pytaniu."
+                    " Odpowiedzi są wyświetlone na końcu."),
+        verbose_name=_("Odpowiedzi na końcu"))
 
     exam_paper = models.BooleanField(
         blank=False, default=False,
-        help_text=_("If yes, the result of each"
-                    " attempt by a user will be"
-                    " stored. Necessary for marking."),
-        verbose_name=_("Exam Paper"))
+        help_text=_("Jeśli tak, wynik każdego"
+                    " podejścia do egzaminu będzie"
+                    " przechowywany. Potrzebne do oceniania."),
+        verbose_name=_("Egzamin"))
 
     single_attempt = models.BooleanField(
         blank=False, default=False,
-        help_text=_("If yes, only one attempt by"
-                    " a user will be permitted."
-                    " Non users cannot sit this exam."),
-        verbose_name=_("Single Attempt"))
+        help_text=_("Jeśli tak, użytkownik"
+                    " może podejść do egzaminu tylko raz."
+                    " Osoby niezalogowane nie mogą podejść do egzaminu."),
+        verbose_name=_("Jedno podejście"))
 
     pass_mark = models.SmallIntegerField(
         blank=True, default=0,
-        verbose_name=_("Pass Mark"),
-        help_text=_("Percentage required to pass exam."),
+        verbose_name=_("Próg procentowy"),
+        help_text=_("Procent wymagany do zaliczenia egzaminu."),
         validators=[MaxValueValidator(100)])
 
     success_text = models.TextField(
-        blank=True, help_text=_("Displayed if user passes."),
-        verbose_name=_("Success Text"))
+        blank=True, help_text=_("Wyświetli się w przypadku zaliczenia."),
+        verbose_name=_("Tekst powodzenia"))
 
     fail_text = models.TextField(
-        verbose_name=_("Fail Text"),
-        blank=True, help_text=_("Displayed if user fails."))
+        verbose_name=_("Tekst niepowodzenia"),
+        blank=True, help_text=_("Wyświetli się w przypadku niezaliczenia."))
 
     draft = models.BooleanField(
         blank=True, default=False,
-        verbose_name=_("Draft"),
-        help_text=_("If yes, the quiz is not displayed"
-                    " in the quiz list and can only be"
-                    " taken by users who can edit"
-                    " quizzes."))
+        verbose_name=_("Szkic"),
+        help_text=_("Jeśli tak, test nie jest wyświetlany"
+                    " na liście i może być rozwiązany"
+                    " tylko przez użytkowników, którzy mają uprawnienia"
+                    " do edycji."))
 
     def save(self, force_insert=False, force_update=False, *args, **kwargs):
         self.url = re.sub('\s+', '-', self.url).lower()
@@ -145,13 +145,13 @@ class Quiz(models.Model):
             self.exam_paper = True
 
         if self.pass_mark > 100:
-            raise ValidationError('%s is above 100' % self.pass_mark)
+            raise ValidationError('%s jest powyżej 100' % self.pass_mark)
 
         super(Quiz, self).save(force_insert, force_update, *args, **kwargs)
 
     class Meta:
-        verbose_name = _("Quiz")
-        verbose_name_plural = _("Quizzes")
+        verbose_name = _("Test")
+        verbose_name_plural = _("Testy")
 
     def __str__(self):
         return self.title
@@ -190,16 +190,16 @@ class Progress(models.Model):
     Data stored in csv using the format:
         category, score, possible, category, score, possible, ...
     """
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, verbose_name=_("User"))
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, verbose_name=_("Użytkownik"))
 
     score = models.CommaSeparatedIntegerField(max_length=1024,
-                                              verbose_name=_("Score"))
+                                              verbose_name=_("Wynik"))
 
     objects = ProgressManager()
 
     class Meta:
-        verbose_name = _("User Progress")
-        verbose_name_plural = _("User progress records")
+        verbose_name = _("Postęp użytkownika")
+        verbose_name_plural = _("Postępy użytkowników")
 
     @property
     def list_all_cat_scores(self):
@@ -259,7 +259,7 @@ class Progress(models.Model):
                                            possible_to_add,
                                            isinstance(score_to_add, int),
                                            isinstance(possible_to_add, int)]]):
-            return _("error"), _("category does not exist or invalid score")
+            return _("error"), _("kategoria nie istnieje lub błędny wynik")
 
         to_find = re.escape(str(question.category)) +\
             r",(?P<score>\d+),(?P<possible>\d+),"
@@ -366,31 +366,31 @@ class Sitting(models.Model):
     with the answer the user gave.
     """
 
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name=_("User"))
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name=_("Użytkownik"))
 
     quiz = models.ForeignKey(Quiz, verbose_name=_("Quiz"))
 
     question_order = models.CommaSeparatedIntegerField(
-        max_length=1024, verbose_name=_("Question Order"))
+        max_length=1024, verbose_name=_("Kolejność pytań"))
 
     question_list = models.CommaSeparatedIntegerField(
-        max_length=1024, verbose_name=_("Question List"))
+        max_length=1024, verbose_name=_("Lista pytań"))
 
     incorrect_questions = models.CommaSeparatedIntegerField(
         max_length=1024, blank=True, verbose_name=_("Incorrect questions"))
 
-    current_score = models.IntegerField(verbose_name=_("Current Score"))
+    current_score = models.IntegerField(verbose_name=_("Aktualny wynik"))
 
     complete = models.BooleanField(default=False, blank=False,
                                    verbose_name=_("Complete"))
 
     user_answers = models.TextField(blank=True, default='{}',
-                                    verbose_name=_("User Answers"))
+                                    verbose_name=_("Odpowiedzi użytkownika"))
 
     start = models.DateTimeField(auto_now_add=True,
                                  verbose_name=_("Start"))
 
-    end = models.DateTimeField(null=True, blank=True, verbose_name=_("End"))
+    end = models.DateTimeField(null=True, blank=True, verbose_name=_("Koniec"))
 
     objects = SittingManager()
 
@@ -541,38 +541,38 @@ class Question(models.Model):
                                   blank=True)
 
     category = models.ForeignKey(Category,
-                                 verbose_name=_("Category"),
+                                 verbose_name=_("Kategoria"),
                                  blank=True,
                                  null=True)
 
     sub_category = models.ForeignKey(SubCategory,
-                                     verbose_name=_("Sub-Category"),
+                                     verbose_name=_("Podkategoria"),
                                      blank=True,
                                      null=True)
 
     figure = models.ImageField(upload_to='uploads/%Y/%m/%d',
                                blank=True,
                                null=True,
-                               verbose_name=_("Figure"))
+                               verbose_name=_("Plik"))
 
     content = models.CharField(max_length=1000,
                                blank=False,
-                               help_text=_("Enter the question text that "
-                                           "you want displayed"),
-                               verbose_name=_('Question'))
+                               help_text=_("Wpisz tekst pytania, "
+                                           "które ma zostać wyświetlone"),
+                               verbose_name=_('Pytanie'))
 
     explanation = models.TextField(max_length=2000,
                                    blank=True,
-                                   help_text=_("Explanation to be shown "
-                                               "after the question has "
-                                               "been answered."),
-                                   verbose_name=_('Explanation'))
+                                   help_text=_("Wyjaśnienie, które pojawi się "
+                                               "po tym jak użytkownik "
+                                               "udzieli odpowiedzi."),
+                                   verbose_name=_('Wyjaśnienie'))
 
     objects = InheritanceManager()
 
     class Meta:
-        verbose_name = _("Question")
-        verbose_name_plural = _("Questions")
+        verbose_name = _("Pytanie")
+        verbose_name_plural = _("Pytania")
         ordering = ['category']
 
     def __str__(self):
