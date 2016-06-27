@@ -66,10 +66,11 @@ def lesson_list(request):
 # @login_required
 def lesson_detail(request, pk):
     lesson = get_object_or_404(Lekcja, pk=pk)
+    jakikurs= Article.objects.get(lekcja__tytul__contains=lesson.tytul)
     articles = Article.objects.filter(data_opublikowania__lte=timezone.now()).order_by('data_opublikowania')
     categories = Category.objects.filter(data_opublikowania__lte=timezone.now()).order_by('data_opublikowania')
     czyobraz = Lekcja.objects.filter(Q(docfile__endswith='png') | Q(docfile__endswith='jpg') | Q(docfile__endswith='bmp') | Q(docfile__endswith='gif') | Q(docfile__endswith='jpeg'))
-    lessons = Lekcja.objects.filter(data_opublikowania__lte=timezone.now()).order_by('data_opublikowania')
+    lessons = Lekcja.objects.filter(Q(data_opublikowania__lte=timezone.now()), Q(kurs__tytul__contains=jakikurs.tytul))
     return render(request, 'newsy/post_detail.html', {'lesson': lesson, 'lessons': lessons, 'czyobraz': czyobraz, 'articles': articles, 'categories': categories})
 	
 def category_list(request):
