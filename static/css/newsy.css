@@ -134,7 +134,8 @@ h1, h2, h3, h4 {
     margin-right: 0;
 	float: right;
 	width: 200;
-	height: 200%;
+	min-height: 200%;
+	max-height: auto;
     padding: 5px 5px 5px 10px;
 }
 
